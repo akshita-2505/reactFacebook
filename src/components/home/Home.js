@@ -60,7 +60,7 @@ function Home(props) {
             </div>
             <div style={{flexDirection: 'row', display: 'flex', backgroundColor: '#DEE1EE', flex: 1}}>
                 <LeftContainer/>
-                <RightContainer/>
+                <RightContainer history={props.history}/>
             </div>
         </div>
     )

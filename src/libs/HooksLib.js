@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export function useFormFields(initialState) {
     const [fields, setValues] = useState(initialState);
-
+    // console.log(fields);
     return [
         fields,
         function(event) {

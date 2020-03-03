@@ -1,4 +1,5 @@
 import React from 'react';
+import {Button} from 'react-bootstrap';
 
 class Home extends React.Component{
     constructor(props) {
@@ -10,7 +11,7 @@ class Home extends React.Component{
     render(){
         return(
             <div style={{flex: 1}}>
-                Profile
+                <Button type="button" className="btn btn-primary">Primary</Button>
             </div>
         )
     }
