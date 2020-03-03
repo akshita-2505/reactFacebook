@@ -11,7 +11,7 @@ class Home extends React.Component{
     render(){
         return(
             <div style={{flex: 1}}>
-                <Button type="button" className="btn btn-primary">Primary</Button>
+                <Button type="button" className="btn btn-primary">test</Button>
             </div>
         )
     }
