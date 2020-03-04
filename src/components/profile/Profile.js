@@ -1,40 +1,49 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import Buttons from './Buttons'
 import './App.css'
-import * as firebase from "firebase";
+import  firebase from 'firebase/app';
 
 class Home extends React.Component{
     state = {
         uploading: false,
-    }
+    };
 
     onChange = e => {
-        const files = Array.from(e.target.files)
         this.setState({ uploading: true })
+        for (let i = 0; i < e.target.files.length; i++) {
+            let imageFile = e.target.files[i];
+            this.uploadImageToStorage(imageFile);
+        }
+    };
 
-        const formData = new FormData()
-
-        files.forEach((file, i) => {
-            formData.append(i, file)
-        })
-        debugger
-
-        firebase.storage().ref('test/').put(files).then((snapshot) => {
-debugger
-        }).catch(e => console.log(e))
-
-        /*fetch(`${API_URL}/image-upload`, {
-            method: 'POST',
-            body: formData
-        })
-            .then(res => res.json())
-            .then(images => {
-                this.setState({
-                    uploading: false,
-                    images
-                })
-            })*/
-    }
+    uploadImageToStorage = (files) => {
+        const uploadTask = firebase.storage().ref(`filesFromReact/${files.name}`).put(files);
+        uploadTask.on(
+            "state_changed",
+            snapshot => {
+                // progress function ...
+                const progress = Math.round(
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                );
+                this.setState({ progress });
+            },
+            error => {
+                // Error function ...
+                console.log(error);
+            },
+            () => {
+                // complete function ...
+                firebase.storage()
+                    .ref("filesFromReact")
+                    .child(files.name)
+                    .getDownloadURL()
+                    .then(url => {
+                        console.log(url);
+                        this.setState({ url });
+                    });
+            }
+        )
+    };
 
     render() {
         return (
